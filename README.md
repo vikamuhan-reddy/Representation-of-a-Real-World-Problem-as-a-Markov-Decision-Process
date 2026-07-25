@@ -1,13 +1,8 @@
-# Representation-of-a-Real-World-Problem-as-a-Markov-Decision-Process
-
+# Representation of a Real-World Problem as a Markov Decision Process
 
 ## Aim
 
-Write your aim here.
-
-Example:
-
-> To identify a real-world sequential decision-making problem and represent it formally as a Markov Decision Process by defining its states, actions, rewards, transitions, and Python representation.
+To represent an **Ambulance Navigation System** in a confined environment with obstacles as a Markov Decision Process (MDP) by defining its states, actions, transition probabilities, rewards, and Python representation.
 
 ---
 
@@ -15,10 +10,7 @@ Example:
 
 ### Problem Description
 
-Write your answer here.
-
-Describe the real-world application that you selected.
-
+An ambulance must travel from a starting location to a hospital in a confined grid while avoiding obstacles such as roadblocks and blocked paths. At each step, the ambulance decides whether to move up, down, left, or right. The objective is to reach the hospital safely in the shortest possible path while maximizing the total reward.
 
 ---
 
@@ -44,68 +36,61 @@ Where:
 
 ## State Space
 
-Write your answer here.
-
-The state space should list all possible situations in which the agent can exist.
+The state space should list all possible situations in which the ambulance can exist.
 
 Example format:
 
 ```text
 S = {
-    State 1,
-    State 2,
-    State 3,
-    ...
+    Start,
+    Free Cell,
+    Obstacle,
+    Hospital (Goal)
 }
 ```
-
-
 
 ---
 
 ## Sample State
 
-Write your answer here.
+**Free Cell**
 
 A sample state is one specific example from the state space.
-
-
 
 ---
 
 ## Action Space
 
-Write your answer here.
-
-The action space should list all possible actions available to the agent.
+The action space should list all possible actions available to the ambulance.
 
 Example format:
 
 ```text
 A = {
-    Action 1,
-    Action 2,
-    Action 3,
-    ...
+    Move Up,
+    Move Down,
+    Move Left,
+    Move Right
 }
 ```
-
 
 ---
 
 ## Sample Action
 
-Write your answer here.
+**Move Right**
 
 A sample action is one action selected from the action space.
-
-
 
 ---
 
 ## Transition Probability
 
-Write your answer here.
+If the ambulance is at the **Free Cell** and chooses **Move Right**, it reaches the next free cell with probability **1.0**.
+
+$$
+P(\text{Next Free Cell} \mid \text{Free Cell}, \text{Move Right}) = 1.0
+$$
 
 The transition probability explains how the environment moves from one state to another after an action is taken.
 
@@ -117,16 +102,19 @@ $$
 
 This means:
 
-> Probability of reaching next state $s'$ after taking action $a$ in current state $s$.
-
+> Probability of reaching the next state $s'$ after taking action $a$ in the current state $s$.
 
 ---
 
 ## Reward Function
 
-Write your answer here.
+```text
+Reach Hospital = +100
+Move to Free Cell = -1
+Hit Obstacle/Invalid Move = -10
+```
 
-The reward function defines the feedback received by the agent after taking an action.
+The reward function defines the feedback received by the ambulance after taking an action.
 
 General form:
 
@@ -134,13 +122,9 @@ $$
 R(s,a,s')
 $$
 
-
-
 ---
 
 ## Graphical Representation
-
-Write your answer here.
 
 Draw the MDP graph.
 
@@ -151,35 +135,78 @@ The graph should include:
 3. Rewards on transitions.
 4. Transition probabilities if applicable.
 
+<img width="450" height="400" alt="ambulance_navigation_mdp_graph" src="https://github.com/user-attachments/assets/0cc5b672-54cd-4910-b380-22c8d6f29cb8" />
+
+
 
 ---
 
 ## Python Representation
 
-Write your code here.
-
-Use Python dictionaries to represent the MDP.
-
-
 ```python
 # MDP Representation using Python
-# print("Name:       ")
-# print("Register Number:     ")
+# print("Name: ")
+# print("Register Number: ")
 
+# Ambulance Navigation MDP
+
+# States
+# 0 = Start
+# 1 = Free Cell
+# 2 = Obstacle
+# 3 = Hospital (Goal)
+
+# Actions
+# 0 = Move Up
+# 1 = Move Down
+# 2 = Move Left
+# 3 = Move Right
+
+P = {
+    0: {
+        3: [(1.0, 1, -1, False)]
+    },
+
+    1: {
+        0: [(1.0, 1, -1, False)],
+        1: [(1.0, 1, -1, False)],
+        2: [(1.0, 2, -10, False)],
+        3: [(1.0, 3, 100, True)]
+    },
+
+    2: {
+        0: [(1.0, 2, -10, False)],
+        1: [(1.0, 2, -10, False)],
+        2: [(1.0, 2, -10, False)],
+        3: [(1.0, 2, -10, False)]
+    },
+
+    3: {
+        0: [(1.0, 3, 0, True)],
+        1: [(1.0, 3, 0, True)],
+        2: [(1.0, 3, 0, True)],
+        3: [(1.0, 3, 0, True)]
+    }
+}
+
+print("Ambulance Navigation MDP\n")
+
+for state in P:
+    print(f"{state}:")
+    print(" {")
+    for action in P[state]:
+        print(f"   {action}: {P[state][action]}")
+    print(" }\n")
 ```
----
+
+
+
 ## Output
 
-Write your Python output here.
 
 
----
+
 
 ## Result
 
-Write your result here.
-
-
-
----
-
+Thus, the MDP model for Ambulance Navigation in a Confined Environment with Obstacles was successfully created and represented using Python.
