@@ -145,8 +145,8 @@ The graph should include:
 
 ```python
 # MDP Representation using Python
-# print("Name: ")
-# print("Register Number: ")
+# print("Name: Vikamuhan Reddy")
+# print("Register Number: 212223240181")
 
 # Ambulance Navigation MDP
 
@@ -203,6 +203,7 @@ for state in P:
 
 ## Output
 
+<img width="412" height="529" alt="image" src="https://github.com/user-attachments/assets/0b65c68e-83a2-43b7-9a8d-958e874c463d" />
 
 
 
