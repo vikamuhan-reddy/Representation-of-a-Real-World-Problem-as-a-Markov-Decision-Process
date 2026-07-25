@@ -145,8 +145,8 @@ The graph should include:
 
 ```python
 # MDP Representation using Python
-# print("Name: Vikamuhan Reddy")
-# print("Register Number: 212223240181")
+print("Name: Vikamuhan Reddy")
+print("Register Number: 212223240181")
 
 # Ambulance Navigation MDP
 
