@@ -214,7 +214,9 @@ for state in P:
 ## Output
 
 The program displays the transition probabilities, rewards, and terminal states for each state-action pair of the Ambulance Navigation MDP.
-<img width="362" height="528" alt="image" src="https://github.com/user-attachments/assets/232b0892-a398-46ee-992f-f830a73d6377" />
+
+
+<img width="150" height="250" alt="image" src="https://github.com/user-attachments/assets/232b0892-a398-46ee-992f-f830a73d6377" />
 
 
 ---
