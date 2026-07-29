@@ -25,7 +25,7 @@ $$
 Where:
 
 | Symbol | Meaning |
-|---|---|
+|---------|---------|
 | $S$ | Set of states |
 | $A$ | Set of actions |
 | $P$ | Transition probability function |
@@ -36,9 +36,7 @@ Where:
 
 ## State Space
 
-The state space should list all possible situations in which the ambulance can exist.
-
-Example format:
+The state space lists all possible situations in which the ambulance can exist.
 
 ```text
 S = {
@@ -61,9 +59,7 @@ A sample state is one specific example from the state space.
 
 ## Action Space
 
-The action space should list all possible actions available to the ambulance.
-
-Example format:
+The action space lists all possible actions available to the ambulance.
 
 ```text
 A = {
@@ -86,35 +82,49 @@ A sample action is one action selected from the action space.
 
 ## Transition Probability
 
-If the ambulance is at the **Free Cell** and chooses **Move Right**, it reaches the next free cell with probability **1.0**.
+When the ambulance is at the **Free Cell**, it has four possible transitions.
+
+| Current State | Action | Next State | Probability |
+|---------------|--------|------------|-------------|
+| Free Cell | Move Up | Free Cell | 0.25 |
+| Free Cell | Move Down | Free Cell | 0.25 |
+| Free Cell | Move Left | Obstacle | 0.25 |
+| Free Cell | Move Right | Hospital | 0.25 |
+
+Since the sum of all transition probabilities from the **Free Cell** is
 
 $$
-P(\text{Next Free Cell} \mid \text{Free Cell}, \text{Move Right}) = 1.0
+0.25+0.25+0.25+0.25=1.0
 $$
 
-The transition probability explains how the environment moves from one state to another after an action is taken.
+the transition probabilities satisfy the MDP requirement.
+
+Example:
+
+$$
+P(\text{Hospital}\mid\text{Free Cell},\text{Move Right})=0.25
+$$
 
 General form:
 
 $$
-P(s' \mid s,a)
+P(s'|s,a)
 $$
 
-This means:
-
-> Probability of reaching the next state $s'$ after taking action $a$ in the current state $s$.
+This represents the probability of reaching the next state $s'$ after taking action $a$ from the current state $s$.
 
 ---
 
 ## Reward Function
 
 ```text
-Reach Hospital = +100
-Move to Free Cell = -1
-Hit Obstacle/Invalid Move = -10
+Reach Hospital        = +100
+Move to Free Cell     = -1
+Hit Obstacle          = -10
+Invalid Move          = -10
 ```
 
-The reward function defines the feedback received by the ambulance after taking an action.
+The reward function provides feedback after every action.
 
 General form:
 
@@ -126,18 +136,11 @@ $$
 
 ## Graphical Representation
 
-Draw the MDP graph.
-
-The graph should include:
-
-1. States as nodes.
-2. Actions as arrows.
-3. Rewards on transitions.
-4. Transition probabilities if applicable.
-
-<img width="450" height="400" alt="ambulance_navigation_mdp_graph" src="https://github.com/user-attachments/assets/0cc5b672-54cd-4910-b380-22c8d6f29cb8" />
+Draw the MDP graph using the following transitions.
+<img width="2720" height="1720" alt="ambulance_mdp_corrected_graph" src="https://github.com/user-attachments/assets/93c7266b-7c67-4e9a-bc78-62daa1a22cdc" />
 
 
+The transition probabilities from the **Free Cell** satisfy
 
 ---
 
@@ -145,6 +148,7 @@ The graph should include:
 
 ```python
 # MDP Representation using Python
+
 print("Name: Vikamuhan Reddy")
 print("Register Number: 212223240181")
 
@@ -163,51 +167,58 @@ print("Register Number: 212223240181")
 # 3 = Move Right
 
 P = {
+
+    # Start
     0: {
         3: [(1.0, 1, -1, False)]
     },
 
+    # Free Cell
     1: {
-        0: [(1.0, 1, -1, False)],
-        1: [(1.0, 1, -1, False)],
-        2: [(1.0, 2, -10, False)],
-        3: [(1.0, 3, 100, True)]
+        0: [(0.25, 1, -1, False)],
+        1: [(0.25, 1, -1, False)],
+        2: [(0.25, 2, -10, False)],
+        3: [(0.25, 3, 100, True)]
     },
 
+    # Obstacle
     2: {
-        0: [(1.0, 2, -10, False)],
-        1: [(1.0, 2, -10, False)],
-        2: [(1.0, 2, -10, False)],
-        3: [(1.0, 2, -10, False)]
+        0: [(0.25, 2, -10, False)],
+        1: [(0.25, 2, -10, False)],
+        2: [(0.25, 2, -10, False)],
+        3: [(0.25, 2, -10, False)]
     },
 
+    # Hospital (Goal)
     3: {
-        0: [(1.0, 3, 0, True)],
-        1: [(1.0, 3, 0, True)],
-        2: [(1.0, 3, 0, True)],
-        3: [(1.0, 3, 0, True)]
+        0: [(0.25, 3, 0, True)],
+        1: [(0.25, 3, 0, True)],
+        2: [(0.25, 3, 0, True)],
+        3: [(0.25, 3, 0, True)]
     }
 }
+
 
 print("Ambulance Navigation MDP\n")
 
 for state in P:
-    print(f"{state}:")
-    print(" {")
+    print(f"State {state}:")
+    print("{")
     for action in P[state]:
-        print(f"   {action}: {P[state][action]}")
-    print(" }\n")
+        print(f"  Action {action}: {P[state][action]}")
+    print("}\n")
 ```
 
-
+---
 
 ## Output
 
-<img width="412" height="529" alt="image" src="https://github.com/user-attachments/assets/0b65c68e-83a2-43b7-9a8d-958e874c463d" />
+The program displays the transition probabilities, rewards, and terminal states for each state-action pair of the Ambulance Navigation MDP.
+<img width="362" height="528" alt="image" src="https://github.com/user-attachments/assets/232b0892-a398-46ee-992f-f830a73d6377" />
 
 
-
+---
 
 ## Result
 
-Thus, the MDP model for Ambulance Navigation in a Confined Environment with Obstacles was successfully created and represented using Python.
+Thus, the **Ambulance Navigation System** was successfully represented as a **Markov Decision Process (MDP)** by defining its states, actions, transition probabilities, reward function, graphical representation, and Python implementation. The transition probabilities were updated so that they satisfy the MDP property that the total transition probability from a state equals **1.0**.
